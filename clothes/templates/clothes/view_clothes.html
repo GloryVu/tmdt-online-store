@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    table,
+    th,
+    td {
+        border: 2px double;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        width: 100%;
+        background-color: beige;
+    }
+    
+</style>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>type</th>
+            <th>description</th>
+            <th>material</th>
+            <th>color</th>
+            <th>gender</th>
+            <th>size</th>
+            <th>name</th>
+            <th>season</th>
+            <th>img</th>
+            <th>clothes Brand</th>
+        </tr>
+
+        {% for clothes in clotheses %}
+        <tr>
+            <td>{{clothes.ID}}</td>
+            <td>{{clothes.type}}</td>
+            <td>{{clothes.description}}</td>
+            <td>{{clothes.material}}</td>
+            <td>{{clothes.color}}</td>
+            <td>{{clothes.gender}}</td>
+            <td>{{clothes.size}}</td>
+            <td>{{clothes.name}}</td>
+            <td>{{clothes.season}}</td>
+            <td><img src="{{clothes.img}}" alt=""></td>
+            <td>{{clothes.clothesBrand.name}}</td>
+            
+            
+            <td>
+                <form action="{% url 'clothes:update_clothes_form' clothes.ID %}" method="GET">
+                    {% csrf_token %}
+                    <input type="submit" value="Update">
+                </form>
+                <form action="{% url 'clothes:delete_clothes' clothes.ID %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

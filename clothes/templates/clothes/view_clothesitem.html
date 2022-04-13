@@ -1,0 +1,54 @@
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        width: 100%;
+        background-color: beige;
+    }
+</style>
+<div>
+    <table>
+        <tr>
+            <th>ISBN</th>
+            <th>title</th>
+            <th>numberOfPage</th>
+            <th>language</th>
+            <th>img</th>
+            <th>publisher</th>
+            <th>category</th>
+            <th>author</th>
+            <th>action</th>
+        </tr>
+
+
+        {% for clothes in clothess %}
+        <tr>
+            <td>{{clothes.ISBN}}</td>
+            <td>{{clothes.title}}</td>
+            <td>{{clothes.numberOfPage}}</td>
+            <td>{{clothes.language}}</td>
+            <td><img src="{{clothes.img}}" alt=""></td>
+            <td>{{clothes.publisher.name}}</td>
+            <td>{{clothes.category.name}}</td>
+            <td>{{clothes.author.name}}</td>
+            <td>
+                <form action="{% url 'clothes:update_clothes_form' clothes.ISBN %}" method="GET">
+                    {% csrf_token %}
+                    <input type="submit" value="Update">
+                </form>
+                <form action="{% url 'clothes:delete_clothes' clothes.ISBN %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
