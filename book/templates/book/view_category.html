@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    table,
+    th,
+    td {
+        border: 2px double;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        width: 100%;
+        background-color: beige;
+    }
+</style>
+<a href="{% url 'book:create_ctegory_form' %}">Create Book</a>
+<div>
+    
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>name</th>
+            <th>createAt</th>
+            <th>action</th>
+        </tr>
+
+
+        {% for category in categorys %}
+        <tr>
+            
+
+            <td>{{category.ID}}</td>
+            <td>{{category.name}}</td>
+            <td>{{category.createAt}}</td>
+
+
+            <td>
+                <form action="{% url 'book:update_category_form' category.ID %}" method="GET">
+                    {% csrf_token %}
+                    <input type="submit" value="Update">
+                </form>
+                <form action="{% url 'book:delete_category' category.ID %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

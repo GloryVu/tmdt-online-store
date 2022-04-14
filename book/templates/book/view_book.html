@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<a href="{% url 'book:create_book_form' %} " class="btn btn-outline-danger w-25 mt-5 mb-5 active" style="margin-left: 75%;" >Create Book</a>
+<div>
+    
+    <table class="table table-hover table-striped table-light">
+        <tr class="thead-dark text-capitalize text-center">
+            <th>ISBN</th>
+            <th>title</th>
+            <th>numberOfPage</th>
+            <th>language</th>
+            <th>img</th>
+            <th>publisher</th>
+            <th>category</th>
+            <th>author</th>
+            <th>action</th>
+        </tr>
+
+
+        {% for book in books %}
+        {% load static %}
+        <tr>
+            <td>{{book.ISBN}}</td>
+            <td>{{book.title}}</td>
+            <td>{{book.numberOfPage}}</td>
+            <td>{{book.language}}</td>
+            <td><img src="../../static/2_kH1MA3M.jpg" alt="Not found"></td>
+            <td>{{book.publisher.name}}</td>
+            <td>{{book.category.name}}</td>
+            <td>{{book.author.name}}</td>
+            <td>
+                <form action="{% url 'book:update_book_form' book.ISBN %}" method="GET">
+                    {% csrf_token %}
+                    <input type="submit" value="Update" class="btn btn-outline-info w-75 mb-1">
+                </form>
+                <form action="{% url 'book:delete_book' book.ISBN %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete" class="btn btn-outline-danger w-75">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

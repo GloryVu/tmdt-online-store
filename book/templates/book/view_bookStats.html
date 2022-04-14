@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        width: 100%;
+        background-color: beige;
+    }
+</style>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>quantity</th>
+            <th>importPrice</th>
+            <th>quantityLeft</th>
+            <th>createAt</th>
+            <th>book</th>
+        </tr>
+        {% for bookStats in bookStatss %}
+        <tr>
+            <td>{{bookStats.ID}}</td>
+            <td>{{bookStats.quantity}}</td>
+            <td>{{bookStats.importPrice}}</td>
+            <td>{{bookStats.quantityLeft}}</td>
+            <td>{{bookStats.createAt}}</td>
+            <td>{{bookStats.book}}</td>
+            <td>
+                <form action="{% url 'book:update_bookStats_form' bookStats.ID %}" method="GET">
+                    {% csrf_token %}
+                    <input type="submit" value="Update">
+                </form>
+                <form action="{% url 'book:delete_bookStats' bookStats.ID %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+{% endblock %}

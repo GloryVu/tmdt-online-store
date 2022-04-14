@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    table {
+        width: 100%;
+        background-color: beige;
+    }
+</style>
+<div>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>barcode</td>
+            <td>price</td>
+            <td>discount</td>
+            <td>book</td>
+            <td>action</td>
+        </tr>
+
+
+        {% for bookItem in bookItems %}
+        <tr>
+
+            <td>{{bookItem.ID}}</td>
+            <td>{{bookItem.barcode}}</td>
+            <td>{{bookItem.price}}</td>
+            <td>{{bookItem.discount}}</td>
+            <td>{{bookItem.book}}</td>
+            <td>
+                <form action="{% url 'book:update_bookItem_form' bookItem.ID %}" method="GET">
+                    {% csrf_token %}
+                    <input type="submit" value="Update">
+                </form>
+                <form action="{% url 'book:delete_bookItem' bookItem.ID %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+{% endblock %}
